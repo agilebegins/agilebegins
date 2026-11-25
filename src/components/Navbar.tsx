@@ -1,111 +1,84 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import RollingText from "@/components/RollingText";
+import { User } from "lucide-react";
+import Image from "next/image";
 
-const links = [
-  { label: "HOW IT WORKS", href: "#how-it-works" },
-  { label: "PRICING", href: "#pricing" },
-  { label: "WHY US", href: "#why-us" },
-  { label: "FAQs", href: "#faqs" },
+const navLinks = [
+  { label: "Home", href: "#" },
+  { label: "Workshops", href: "#events" },
+  { label: "Our Purpose", href: "#four-pillars" },
+  { label: "College Groups", href: "#get-involved" },
+  { label: "For Students", href: "#action-plan" },
 ];
 
+const tickerText =
+  "✦ BY STUDENTS, FOR STUDENTS ✦ ZERO SYLLABUS • PURE HUSTLE ✦ PROS AT WORK ✦ OGS IN CHARGE ✦ PEER JAMS & CAMPUS HQS ✦ BUILD IN PUBLIC ✦ SHIP REAL DROPS ✦";
+
 export default function Navbar() {
-  // Nav links stay visible at the top; scrolling down hides them, and even a
-  // small scroll back up brings them back.
-  const [linksVisible, setLinksVisible] = useState(true);
-  const lastY = useRef(0);
-
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    lastY.current = window.scrollY;
-
-    const onScroll = () => {
-      const y = window.scrollY;
-      const prev = lastY.current;
-      lastY.current = y;
-
-      if (y <= 24) {
-        setLinksVisible(true);
-        return;
-      }
-      if (y > prev) {
-        // Scrolling down — hide.
-        setLinksVisible(false);
-      } else if (y < prev) {
-        // Any upward movement — show.
-        setLinksVisible(true);
-      }
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
-    <header className="sticky top-0 z-100 w-full bg-transparent px-6 py-4 font-normal font-[family-name:var(--font-cal-sans)] antialiased lg:px-[6.25%]">
-      <div className="mx-auto flex w-full max-w-415.5 items-center justify-between">
-        <Link
-          href="/"
-          className="flex shrink-0 items-center"
-          aria-label="Project One home"
-        >
-          <Image
-            src="/logos/logo_exact_black_transparent_64px.png"
-            alt="Project One"
-            width={36}
-            height={36}
-            priority
-            className="h-auto w-9"
-          />
-          <span className="font-normal leading-none text-neutral-900 text-lg">
-            AgileBegins
-          </span>
-        </Link>
-
-        <div className="flex items-center gap-1.5">
-          <nav
-            aria-label="Primary"
-            className={`hidden shrink-0 items-center gap-10 rounded-lg bg-neutral-900 px-5.5 py-3.5 transition-all duration-400 [perspective:480px] md:flex ${
-              linksVisible
-                ? "[transform:rotateX(0deg)] opacity-100"
-                : "pointer-events-none [transform:rotateX(-84deg)] opacity-0"
-            }`}
-            style={{ transformOrigin: "top center" }}
+    <header className="fixed top-0 left-0 right-0 z-50 bg-surface/95 backdrop-blur-xl border-b-2 border-border-dark">
+            <div className="w-full overflow-hidden bg-ink text-white/80 border-b-2 border-border-dark py-1 flex items-center select-none group">
+        <div className="flex w-max animate-marquee [animation-duration:45s] group-hover:[animation-play-state:paused]">
+          <div className="flex shrink-0 items-center gap-6 pr-6 whitespace-nowrap font-label-mono-sm text-[11px] tracking-widest">
+            <span>{tickerText}</span>
+            <span>{tickerText}</span>
+          </div>
+          <div
+            aria-hidden="true"
+            className="flex shrink-0 items-center gap-6 pr-6 whitespace-nowrap font-label-mono-sm text-[11px] tracking-widest"
           >
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="font-normal leading-none whitespace-nowrap text-white/85 transition-colors hover:text-accent text-sm tracking-wide"
-              >
-                <RollingText text={link.label} />
-              </Link>
-            ))}
-          </nav>
+            <span>{tickerText}</span>
+            <span>{tickerText}</span>
+          </div>
+        </div>
+      </div>
 
-          <Link
-            href="#reserve"
-            className="group flex shrink-0 items-center gap-3.75 rounded-lg border border-transparent bg-neutral-900 py-1.5 pr-2.5 pl-5 transition-colors duration-200 hover:border-neutral-900 hover:bg-accent"
-          >
-            <span className="font-normal leading-none whitespace-nowrap text-white uppercase text-sm transition-colors duration-200 group-hover:text-neutral-900">
-              <RollingText text="Reserve Spot" />
-            </span>
-            <span className="flex size-7.5 items-center justify-center rounded-md bg-accent transition-colors duration-200 group-hover:bg-neutral-900">
-              <ArrowRight
-                size={16}
-                className="text-neutral-900 transition-all duration-200 group-hover:-rotate-45 group-hover:text-white"
-                strokeWidth={2.5}
+      <div className="h-20 w-full px-gutter flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Link href="#" className="flex items-center gap-2.5 group" aria-label="AgileBegins home">
+              <Image
+                src="/logos/main-icon.png"
+                alt="AgileBegins"
+                width={32}
+                height={32}
+                className="h-8 w-8"
               />
-            </span>
+            <div className="flex flex-col">
+              <div className="flex items-center gap-1.5">
+                <span className="font-display-hero text-2xl tracking-wide text-ink uppercase leading-none">
+                  AGILEBEGINS
+                </span>
+                
+              </div>
+              <span className="font-label-mono-sm text-[10px] text-on-surface-variant tracking-wider uppercase">
+                ARCHITECTING OPEN PRO CULTURE
+              </span>
+            </div>
           </Link>
+        </div>
+        <nav className="hidden lg:flex items-center gap-space-sm">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="px-3 py-1.5 rounded transition-all font-body-md text-body-md text-on-surface-variant hover:text-ink hover:bg-surface-container-high"
+              aria-current={link.href === "#" ? "page" : undefined}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+        <div className="flex items-center gap-space-md">
+          <Link
+            href="#get-involved"
+            className="inline-flex items-center justify-center bg-brand-lime text-ink font-label-mono-bold text-xs px-5 py-2.5 rounded border-2 border-border-dark shadow-[4px_4px_0px_#000000] hover:bg-brand-blue hover:text-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[3px_3px_0px_#000000] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#000000] transition-all uppercase"
+          >
+            JOIN DISCORD
+          </Link>
+          <div className="w-8 h-8 rounded bg-brand-blue text-white flex items-center justify-center border-2 border-border-dark shadow-[2px_2px_0px_#000000]">
+            <User size={18} strokeWidth={2} />
+          </div>
         </div>
       </div>
     </header>
   );
 }
-

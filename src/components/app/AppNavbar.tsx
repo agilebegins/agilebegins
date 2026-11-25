@@ -99,8 +99,8 @@ export default function AppNavbar({
       <div className="flex h-16 w-full items-center justify-between gap-3 px-3 sm:px-4">
         <Link href="/app" className="flex shrink-0 items-center gap-2" aria-label="AgileBegins app home">
           <Image
-            src="/logos/logo_exact_black_transparent_64px.png"
-            alt="AgileBegins"
+            src="/logos/main-icon.png"
+            alt="AgileBegins logo"
             width={32}
             height={32}
             priority

@@ -1,0 +1,14 @@
+
+> agilebegins@0.1.0 lint
+> eslint
+
+
+C:\Users\Harsha vardhan\Desktop\agilebegins\src\app\page.tsx
+  441:17  error  Parsing error: JSX element 'article' has no corresponding closing tag
+
+C:\Users\Harsha vardhan\Desktop\agilebegins\tmp\invite-repo-smoke.mts
+  1:1  warning  Unused eslint-disable directive (no problems were reported from 'no-console')
+
+✖ 2 problems (1 error, 1 warning)
+  0 errors and 1 warning potentially fixable with the `--fix` option.
+
