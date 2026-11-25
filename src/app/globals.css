@@ -1,75 +1,155 @@
-@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0");
 
-@font-face {
-  font-family: "Clash Display";
-  src: url("../assets/fonts/ClashDisplay-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-brand: #2f1bff;
-  --color-accent: #d6ff00;
+  /* Colours — AgileBegins design system */
+  --color-brand-blue: #2F1BFF;
+  --color-brand-blue-hover: #1C00C9;
+  --color-brand-blue-light: #E1DFFF;
+  --color-brand-lime: #D6FF00;
+  --color-brand-lime-hover: #C4ED00;
+  --color-brand-lime-dark: #435200;
   --color-ink: #111111;
-  --color-muted: rgba(255, 255, 255, 0.75);
+  --color-border-dark: #000000;
+  --color-surface-canvas: #FFFFFF;
+  --color-surface: #F8F9FE;
+  --color-surface-container-low: #F2F3F8;
+  --color-surface-container: #ECEEF3;
+  --color-surface-container-high: #E7E8ED;
+  --color-surface-container-highest: #E1E2E7;
+  --color-on-surface: #111111;
+  --color-on-surface-variant: #454557;
 
-  /* Editor chrome + syntax tint for the codebase footer. A lightened tint of
-     the brand indigo so lime stays reserved for selection, indicators and CTAs. */
-  --color-surface-code: #0b0b12;
-  --color-code: #9d94ff;
+  /* Border radius */
+  --border-radius: 0.25rem;
+  --border-radius-lg: 0.375rem;
+  --border-radius-xl: 0.5rem;
+  --border-radius-full: 9999px;
 
-  --font-display: "Clash Display", var(--font-archivo), sans-serif;
-  --font-heading: var(--font-archivo), sans-serif;
-  --font-body: var(--font-manrope), sans-serif;
+  /* Spacing */
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-xl: 2.5rem;
+  --spacing-space-2xl: 4rem;
+  --spacing-space-3xl: 6rem;
+  --spacing-margin: 2.5rem;
+  --spacing-margin-mobile: 1.25rem;
+  --spacing-gutter: 1.5rem;
+  --spacing-gutter-mobile: 1rem;
 
-  --animate-marquee: marquee 22s linear infinite;
-  --animate-checklist-scroll: checklist-scroll 24s linear infinite;
+  /* Font family */
+  --font-display-hero: "Anton", sans-serif;
+  --font-headline-editorial-lg: "Newsreader", serif;
+  --font-headline-editorial-md: "Newsreader", serif;
+  --font-headline-editorial-italic: "Newsreader", serif;
+  --font-headline-ui-lg: "Plus Jakarta Sans", sans-serif;
+  --font-headline-ui-sm: "Plus Jakarta Sans", sans-serif;
+  --font-body-lg: "Plus Jakarta Sans", sans-serif;
+  --font-body-md: "Plus Jakarta Sans", sans-serif;
+  --font-label-mono-bold: "Space Mono", monospace;
+  --font-label-mono-sm: "Space Mono", monospace;
+  --font-ticker-text: "Space Mono", monospace;
+  --font-yesteryear: "Yesteryear", cursive;
+
+  /* Animation */
+  --animate-marquee: marquee 25s linear infinite;
+}
+
+/* Design-system font utilities — Tailwind v4 doesn't auto-generate
+   `font-*` utilities for custom `--font-*` theme variables, so map them
+   explicitly so Anton / Newsreader / Plus Jakarta Sans / Space Mono
+   actually apply instead of falling back to the rounded body font. */
+@utility font-display-hero {
+  font-family: var(--font-display-hero);
+}
+@utility font-headline-editorial-lg {
+  font-family: var(--font-headline-editorial-lg);
+}
+@utility font-headline-editorial-md {
+  font-family: var(--font-headline-editorial-md);
+}
+@utility font-headline-editorial-italic {
+  font-family: var(--font-headline-editorial-italic);
+}
+@utility font-headline-ui-lg {
+  font-family: var(--font-headline-ui-lg);
+}
+@utility font-headline-ui-sm {
+  font-family: var(--font-headline-ui-sm);
+}
+@utility font-body-lg {
+  font-family: var(--font-body-lg);
+}
+@utility font-body-md {
+  font-family: var(--font-body-md);
+}
+@utility font-label-mono-bold {
+  font-family: var(--font-label-mono-bold);
+}
+@utility font-label-mono-sm {
+  font-family: var(--font-label-mono-sm);
+}
+@utility font-ticker-text {
+  font-family: var(--font-ticker-text);
+}
+
+@utility font-yesteryear {
+  font-family: var(--font-yesteryear);
 }
 
 @keyframes marquee {
-  from {
-    transform: translateX(0);
+  0% {
+    transform: translateX(0%);
   }
-  to {
+  100% {
     transform: translateX(-50%);
   }
 }
 
-/* Execution gap checklist: one full set of 8 rows + gap scrolls by,
-   then wraps seamlessly because content is duplicated. */
-@keyframes checklist-scroll {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(-50%);
-  }
-}
-
 @layer base {
-  html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 6rem;
-  }
-
-  button:not(:disabled),
-  [role="button"]:not([aria-disabled="true"]) {
-    cursor: pointer;
+  html,
+  body {
+    margin: 0;
+    padding: 0;
   }
 
   body {
-    @apply bg-white font-body text-ink antialiased;
+    overscroll-behavior: none;
     overflow-x: hidden;
+    @apply bg-background text-foreground;
   }
 
-  ::selection {
-    background: var(--color-accent);
-    color: var(--color-ink);
+  main > :first-child {
+    margin-top: 0 !important;
+  }
+
+  main > :last-child {
+    margin-bottom: 0 !important;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  body {
+    @apply bg-surface font-body-md text-on-surface antialiased;
+  }
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
   }
 }
 
-/* Caret blink for the codebase footer (the only animation it needs). */
+/* Legacy cube-roll text animation (kept for RollingText-based components). */
 @keyframes agile-caret {
   0%,
   45% {
@@ -81,9 +161,6 @@
   }
 }
 
-/* Roll-up "cube face" text (RollingText component). The wrapper clips to one
-   line of text; on parent-link hover the inner strip translates up one full
-   line so the duplicate face rolls into view. */
 .cube-roll {
   display: inline-block;
   overflow: hidden;
@@ -99,11 +176,6 @@
   transform-style: preserve-3d;
 }
 
-a:hover .cube-roll-inner,
-button:hover .cube-roll-inner {
-  transform: translateY(-1lh);
-}
-
 .cube-roll-face {
   display: block;
   height: 1lh;
@@ -111,17 +183,130 @@ button:hover .cube-roll-inner {
   white-space: nowrap;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .caret-blink {
-    animation: none;
-    opacity: 1;
-  }
+a:hover .cube-roll-inner,
+button:hover .cube-roll-inner {
+  transform: translateY(-1lh);
+}
 
+@media (prefers-reduced-motion: reduce) {
   .animate-marquee {
     animation: none;
   }
 
-  .animate-checklist-scroll {
+  .caret-blink {
     animation: none;
+    opacity: 1;
   }
+}
+
+@theme inline {
+  --font-heading: var(--font-sans);
+  --font-sans: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
 }

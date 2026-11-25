@@ -1,28 +1,28 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import localFont from "next/font/local";
 import "./globals.css";
 import { env } from "@/lib/env";
+import { Anton, Newsreader, Plus_Jakarta_Sans, Space_Mono, Yesteryear, Geist } from "next/font/google";
+import { cn } from "@/lib/utils";
 
-// Cal Sans is the site's primary typeface, self-hosted from
-// src/assets/fonts and applied via the --font-cal-sans CSS variable.
-// Local loading avoids the Google Fonts fallback-metrics warning entirely.
-const calSans = localFont({
-  src: [
-    {
-      path: "../assets/fonts/cal-sans-latin-400-normal.ttf",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../assets/fonts/cal-sans-latin-ext-400-normal.ttf",
-      weight: "400",
-      style: "normal",
-    },
-  ],
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+
+
+/* Self-hosted, optimized design-system fonts. Exposing CSS variables so the
+   @utility rules in globals.css can reference them reliably. */
+const anton = Anton({ variable: "--font-display-hero", weight: "400", display: "swap" });
+const newsreader = Newsreader({
+  variable: "--font-headline-editorial-lg",
+  weight: ["400", "700"],
   display: "swap",
-  variable: "--font-cal-sans",
 });
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-headline-ui-lg",
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+});
+const spaceMono = Space_Mono({ variable: "--font-label-mono-bold", weight: ["400", "700"], display: "swap" });
+const yesteryear = Yesteryear({ variable: "--font-yesteryear", weight: ["400"], display: "swap" });
 
 const siteName = "Agile Begins";
 const description =
@@ -62,8 +62,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={calSans.variable}>
-      <body>
+    <html lang="en" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
+      <body className={`${anton.variable} ${newsreader.variable} ${plusJakartaSans.variable} ${spaceMono.variable} ${yesteryear.variable}`} suppressHydrationWarning>
         {children}
       </body>
     </html>
